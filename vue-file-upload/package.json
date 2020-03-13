@@ -1,6 +1,6 @@
 {
   "name": "vue-file-upload-as-bsf",
-  "version": "0.0.1",
+  "version": "0.1.2",
   "private": false,
   "scripts": {
     "build": "npm run build:unpkg & npm run build:es & npm run build:umd",
@@ -9,7 +9,7 @@
     "build:unpkg": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format iife --file dist/fileupload.min.js"
   },
   "browser": {
-    "./sfc": "src/fileupload.vue"
+    "./sfc": "src/FileUpload.vue"
   },
   "files": [
     "dist/*",
