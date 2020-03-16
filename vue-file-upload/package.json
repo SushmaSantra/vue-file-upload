@@ -1,6 +1,6 @@
 {
   "name": "vue-file-upload-as-bsf",
-  "version": "0.1.2",
+  "version": "0.1.4",
   "private": false,
   "scripts": {
     "build": "npm run build:unpkg & npm run build:es & npm run build:umd",

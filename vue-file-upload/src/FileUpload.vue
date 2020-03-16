@@ -1,13 +1,21 @@
 <template>
   <div>
-    <div class="col-12">
-      <input 
-        type="file"
-        v-bind:class="input_class"
-        @change="onChangeFile"
-
-       />
-    </div>
+    <sub-file-upload 
+        :input_id_s="id"
+        :key="forceUpdateCounter"
+        :forceUpdateCounterS="forceUpdateCounter"
+        :multiple_s="multiple_file_upload"
+        :input_class_s="input_class"
+        :preview_s="preview_file"
+        :label_s="label_input"
+        :label_class_s="label_class"
+        :base_s="base_val"
+        :max_size_s="max_file_size"
+        @forceRerenderFromSubC = "forceRerender"
+        @onFileReady_s = "fileReady"
+        @onMaxSize_s = "maxSizeLimit"
+        @onFileLoaded_s = "fileLoaded"
+    />
   </div>
 </template>
 
@@ -15,48 +23,33 @@
 
 
 <script>
+import SubFileUpload from "./SubFileUpload.vue"
+
 export default {
+
   name: "FileUpload",
-  props: { "input_class",  },
+  components : {
+    "sub-file-upload" : SubFileUpload
+  },
+  props: [ "input_class" , "multiple_file_upload" ,"preview_file" , "label_input" , "base_val" , "max_file_size" , "id" , "label_class" ],
   data() {
     return {
-        file: null,
+      forceUpdateCounter:0,
     }
   },
   methods : {
-    onChangeFile(e){
-      const files = e.target.files || e.dataTransfer.files;
-      if (!files.length) {
-        return;
-      }
-      const file = files[0];
-      const size = file.size && (file.size / Math.pow(1024, 2));
-      // check file max size
-      if (size > this.maxSize) {
-        this.$emit('maxSizeLimit', size);
-        this.file = null;
-        return;
-      }
-      // update file
-      this.file = file;
-      this.$emit('fileReady', file);
-      const reader = new FileReader();
-      reader.onload = e => {
-        const dataURI = e.target.result;
+        forceRerender(val) {
+          this.forceUpdateCounter += 1;  
+        },
+        fileReady(val) {
+          this.$emit()
+        },
+        maxSizeLimit(val) {
 
-        if (dataURI) {
-          this.$emit('fileLoaded', dataURI);
+        },
+        fileLoaded(val) {
 
-          this.preview = dataURI;
         }
-      }//end onload
-      // read blob url from file data
-      reader.readAsDataURL(file);
-    },
-
-    
-
-
 
   },
 };

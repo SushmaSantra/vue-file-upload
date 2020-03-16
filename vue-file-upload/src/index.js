@@ -1,6 +1,6 @@
 // ./src/index.js
 
-import component from "./fileUpload.vue";
+import component from "./FileUpload.vue";
 
 function install(Vue) {
   if (install.installed) return;
