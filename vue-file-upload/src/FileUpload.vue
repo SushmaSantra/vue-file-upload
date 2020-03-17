@@ -14,7 +14,7 @@
         @forceRerenderFromSubC = "forceRerender"
         @onFileReady_s = "fileReady"
         @onMaxSize_s = "maxSizeLimit"
-        @onFileLoaded_s = "fileLoaded"
+        @onFileLoaded_s = "onfileLoaded"
     />
   </div>
 </template>
@@ -38,17 +38,19 @@ export default {
     }
   },
   methods : {
-        forceRerender(val) {
+        forceRerender(val, file) {
+          console.log(file)
+          console.log("File from force re render")
           this.forceUpdateCounter += 1;  
         },
         fileReady(val) {
-          this.$emit()
         },
         maxSizeLimit(val) {
-
+          console.log("File upload max size")
+          this.$emit('maxSizeLimit',val)
         },
-        fileLoaded(val) {
-
+        onfileLoaded(val) {
+          this.$emit('fileLoaded',val)
         }
 
   },
