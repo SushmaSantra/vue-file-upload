@@ -8,7 +8,7 @@
 	        :class="input_class_s"
 	        @change="onChangeFile"
 	       />
-	       <label id="inputLabelCSS" :class="label_class_s" :for="input_id_s">{{label_input}}</label>
+	       <label id="inputLabelCSS" :title="label_input" :class="label_class_s" :for="input_id_s">{{label_input}}</label>
 	    </div>
 	    <div id="snackbar">You cannot select more than {{ }}5 files.</div>
         <div class="col-12" v-if="preview_s">
@@ -54,7 +54,11 @@
 				type: Number,
 				default: 15
 			},
-			forceUpdateCounterS : Number
+			forceUpdateCounterS : Number,
+			max_select_s : {
+				type: Number,
+				default: 10
+			}
 
 		},
 		data () {
@@ -66,28 +70,7 @@
 				allFiles : []
 			}
 		},
-		// watch : {
-		// 	label_s : function (val) 
-		// 	{
-		// 		if(val != null)
-		// 		{
-		// 			this.label_input = val;
-		// 		}
-		// 	},
-
-		// 	base_s : function (val)
-		// 	{
-		// 		if (val == 10)
-		// 		{
-		// 			this.base_size = 1000
-		// 		}
-		// 		else
-		// 		{
-		// 			this.base_size = 1024
-		// 		}
-				 
-		// 	}
-		// },
+		
 		created : function(){
 			if(this.label_s != null || this.label_s !='')
 			{
@@ -110,11 +93,9 @@
 		        var allFiles = [];
 		        var size;
 		        const reader = new FileReader();
-		        console.log(index)
 		      	size = file.size && (file.size / Math.pow(this.base_size, 2));
 		      	// check file max size and force re-render the component, so that the variables are initialized to defaults.
-			      if (size > this.max_size_s) {
-			      	console.log("Max size")
+			      if (size > this.max_size_s+1) {
 			      	// trigger the event , when the size is exceeded the given val
 			        this.$emit('onMaxSize_s', file);
 			        // trigger the component key, to re-render the component
@@ -122,12 +103,9 @@
 			        this.allFiles.push({});
 			        return;
 			      }
-			    console.log(allFiles)
 		      	this.allFiles.push(file);
-
 		      	reader.onload = e => {
 			        const dataURI = e.target.result;
-
 			        if (dataURI) {
 			          this.label_input = file.name;
 			          this.$emit('onFileLoaded_s', dataURI);
@@ -137,24 +115,18 @@
 			    }//end onload
 			    // read blob url from file data
 			    reader.readAsDataURL(file);
-
 			},
 			onChangeFile(e){
-				this.allFiles = [];
+			  this.allFiles = [];
 		      const files = e.target.files || e.dataTransfer.files;
 		      if (!files.length) {
 		        return;
 		      }
-		      if (files.length>5) {
+		      if (files.length > this.max_select_s) {
 		      	this.allFiles = [];
 		      	this.showSnackbar();
 		      	return;
 		      }
-		      // var file;
-		      // var allFiles = [];
-		      // var size;
-		      // const reader = new FileReader();
-
 		      if(files) {
 		      	[].forEach.call(files, this.readAndPreview);
 		      }
@@ -191,10 +163,7 @@
 
 		      // update file
 		      // this.file = file;
-		      console.log("TADAAAAA..........................................")
-		      console.log(this.allFiles)
 		      this.$emit('onFileReady_s', this.allFiles);
-
 		    },
 		    showSnackbar() {
 		    	var x = document.getElementById("snackbar");
@@ -210,9 +179,7 @@
 		display: none;
 	}
 	.hc {
-		border-width: 0 0 1px 0;
-		border-style: solid;
-		border-color: grey;
+
 	}
 	#inputLabelCSS {
 		color: darkslategray; 
