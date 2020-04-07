@@ -13,7 +13,7 @@
         :max_size_s="max_file_size"
         :max_select_s="max_select_file"
         @forceRerenderFromSubC = "forceRerender"
-        @onFileReady_s = "fileReady"
+        @onFileReady_s = "onfileReady"
         @onMaxSize_s = "maxSizeLimit"
         @onFileLoaded_s = "onfileLoaded"
     />
@@ -37,14 +37,12 @@ export default {
   },
   methods : {
         forceRerender(val, file) {
-          console.log(file)
-          console.log("File from force re render")
           this.forceUpdateCounter += 1;  
         },
-        fileReady(val) {
+        onfileReady(val) {
+          this.$emit('fileReady',val)
         },
         maxSizeLimit(val) {
-          console.log("File upload max size")
           this.$emit('maxSizeLimit',val)
         },
         onfileLoaded(val) {

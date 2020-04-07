@@ -77,43 +77,55 @@
 				this.label_input = this.label_s;
 			}
 
-			if (this.base_s == 10)
-			{
-				this.base_size = 1000
-			}
-			else
-			{
-				console.log("Enter a valid Base value, i.e 10 or 2. Since, no valid input was given the base size will be set to its default value (1024). ")
-				this.base_size = 1024
-			}
-
 		},
 		methods : {
 			readAndPreview(file, index, arr){
-		        var allFiles = [];
+		        var allFilest = [];
 		        var size;
 		        const reader = new FileReader();
-		      	size = file.size && (file.size / Math.pow(this.base_size, 2));
+				
+				size = file.size && (file.size / Math.pow(this.base_size, 2));
+				  
 		      	// check file max size and force re-render the component, so that the variables are initialized to defaults.
-			      if (size > this.max_size_s+1) {
+			      if (size > this.max_size_s) {
+					console.log("Max size")
 			      	// trigger the event , when the size is exceeded the given val
-			        this.$emit('onMaxSize_s', file);
-			        // trigger the component key, to re-render the component
-			        this.$emit('forceRerenderFromSubC', this.forceUpdateCounterS, file);
-			        this.allFiles.push({});
-			        return;
+					this.$emit('onMaxSize_s', file);
+
+					// trigger the component key, to re-render the component
+					this.$emit('forceRerenderFromSubC', this.forceUpdateCounterS, file);
+
+			        
+					return;
+					
 			      }
-		      	this.allFiles.push(file);
-		      	reader.onload = e => {
-			        const dataURI = e.target.result;
+				  
+				  allFilest[0] = file;
+
+				  this.allFiles.push(file);
+				
+				  
+				  reader.onload = e => {
+
+					const dataURI = e.target.result;
+					
 			        if (dataURI) {
-			          this.label_input = file.name;
-			          this.$emit('onFileLoaded_s', dataURI);
-			          this.preview = dataURI;
-			          this.allFiles[index].data = dataURI;
+
+					  this.label_input = file.name;
+					  allFilest[0].data = dataURI;
+
+					  this.$emit('onFileLoaded_s', allFilest);
+					  
+					  this.preview = dataURI;
+					  
+					  this.allFiles[index].data = dataURI;
+
+
 			        }
 			    }//end onload
-			    // read blob url from file data
+				// read blob url from file data
+				
+				
 			    reader.readAsDataURL(file);
 			},
 			onChangeFile(e){
@@ -130,40 +142,7 @@
 		      if(files) {
 		      	[].forEach.call(files, this.readAndPreview);
 		      }
-
-		     //  for( var i = 0; i < files.length; i++ ) {
-		     //  	file = files[i];
-		     //  	size = file.size && (file.size / Math.pow(this.base_size, 2));
-		     //  	// check file max size and force re-render the component, so that the variables are initialized to defaults.
-			    //   if (size > this.max_size_s) {
-			    //   	console.log("Max size")
-			    //   	// trigger the event , when the size is exceeded the given val
-			    //     this.$emit('onMaxSize_s', file);
-			    //     // trigger the component key, to re-render the component
-			    //     this.$emit('forceRerenderFromSubC', this.forceUpdateCounterS, file);
-			    //     continue;
-			    //   }
-			    // console.log(allFiles)
-		     //  	allFiles.push(file);
-
-		     //  	reader.onload = e => {
-			    //     const dataURI = e.target.result;
-
-			    //     if (dataURI) {
-			    //       this.label_input = file.name;
-			    //       this.$emit('onFileLoaded_s', dataURI);
-			    //       console.log(dataURI)
-			    //       this.preview = dataURI;
-			    //     }
-			    // }//end onload
-			    // // read blob url from file data
-			    // reader.readAsDataURL(file);
-			      
-		     //  }	      
-
-		      // update file
-		      // this.file = file;
-		      this.$emit('onFileReady_s', this.allFiles);
+		      
 		    },
 		    showSnackbar() {
 		    	var x = document.getElementById("snackbar");
@@ -178,11 +157,12 @@
 	.hc > input[type="file"] {
 		display: none;
 	}
-	.hc {
 
-	}
 	#inputLabelCSS {
 		color: darkslategray; 
+		text-overflow: ellipsis;
+		overflow: hidden;
+		white-space: nowrap;
 	}
 	#snackbar {
 	  	visibility: hidden;
