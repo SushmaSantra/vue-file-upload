@@ -55,6 +55,10 @@
 				default: 15
 			},
 			forceUpdateCounterS : Number,
+			forceUpdateU : {
+				type:Number,
+				default:1
+			},
 			max_select_s : {
 				type: Number,
 				default: 10
@@ -87,7 +91,7 @@
 				size = file.size && (file.size / Math.pow(this.base_size, 2));
 				  
 		      	// check file max size and force re-render the component, so that the variables are initialized to defaults.
-			      if (size > this.max_size_s) {
+			      if (size > this.max_size_s || forceUpdateU!=1) {
 					console.log("Max size")
 			      	// trigger the event , when the size is exceeded the given val
 					this.$emit('onMaxSize_s', file);
