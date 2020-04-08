@@ -13,7 +13,6 @@
         :max_size_s="max_file_size"
         :max_select_s="max_select_file"
         @forceRerenderFromSubC = "forceRerender"
-        @onFileReady_s = "onfileReady"
         @onMaxSize_s = "maxSizeLimit"
         @onFileLoaded_s = "onfileLoaded"
     />
@@ -38,9 +37,6 @@ export default {
   methods : {
         forceRerender(val, file) {
           this.forceUpdateCounter += 1;  
-        },
-        onfileReady(val) {
-          this.$emit('fileReady',val)
         },
         maxSizeLimit(val) {
           this.$emit('maxSizeLimit',val)
