@@ -2,8 +2,7 @@
   <div>
     <sub-file-upload 
         :input_id_s="id"
-        :key="forceUpdateCounter"
-        :forceUpdateU="forceUpdate"
+        :key="UpdateCounter"
         :forceUpdateCounterS="forceUpdateCounter"
         :multiple_s="multiple_file_upload"
         :input_class_s="input_class"
@@ -29,7 +28,7 @@ export default {
   components : {
     "sub-file-upload" : SubFileUpload
   },
-  props: ["forceUpdate" , "input_class" , "multiple_file_upload" ,"preview_file" , "label_input" , "base_val" , "max_file_size" , "id" , "label_class" ,"max_select_file"],
+  props: [ "input_class" , "multiple_file_upload" ,"preview_file" , "label_input" , "base_val" , "max_file_size" , "id" , "label_class" ,"max_select_file", "UpdateCounter"],
   data() {
     return {
       forceUpdateCounter:0,
