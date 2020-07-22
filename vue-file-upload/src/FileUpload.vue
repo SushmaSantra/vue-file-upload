@@ -12,6 +12,7 @@
         :base_s="base_val"
         :max_size_s="max_file_size"
         :max_select_s="max_select_file"
+        :is_disable_s="is_disable"
         @forceRerenderFromSubC = "forceRerender"
         @onMaxSize_s = "maxSizeLimit"
         @onFileLoaded_s = "onfileLoaded"
@@ -28,7 +29,7 @@ export default {
   components : {
     "sub-file-upload" : SubFileUpload
   },
-  props: [ "input_class" , "multiple_file_upload" ,"preview_file" , "label_input" , "base_val" , "max_file_size" , "id" , "label_class" ,"max_select_file", "UpdateCounter"],
+  props: [ "input_class" , "multiple_file_upload" ,"preview_file" , "label_input" , "base_val" , "max_file_size" , "id" , "label_class" ,"max_select_file", "UpdateCounter", "is_disable"],
   data() {
     return {
       forceUpdateCounter:0,

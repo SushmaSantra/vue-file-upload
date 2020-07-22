@@ -6,6 +6,7 @@
 	      	:id="input_id_s" 
 	      	:multiple="multiple_s" 
 	        :class="input_class_s"
+			:disabled="is_disable_s"
 	        @change="onChangeFile"
 	       />
 	       <label id="inputLabelCSS" :title="label_input" :class="label_class_s" :for="input_id_s">{{label_input}}</label>
@@ -58,6 +59,10 @@
 			max_select_s : {
 				type: Number,
 				default: 10
+			},
+			is_disable_s : {
+				type: Boolean,
+				default: false
 			}
 
 		},
