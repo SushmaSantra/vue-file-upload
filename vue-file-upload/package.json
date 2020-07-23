@@ -66,5 +66,6 @@
   "bugs": {
     "url": "https://github.com/SushmaSantra/vue-file-upload/issues"
   },
-  "homepage": "https://github.com/SushmaSantra/vue-file-upload#readme"
+  "homepage": "https://github.com/SushmaSantra/vue-file-upload#readme",
+  "keywords": ["VueJs", "Vue-file-upload", "file-upload", "base64-fileupload"]
 }
